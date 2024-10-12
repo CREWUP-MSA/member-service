@@ -1,4 +1,4 @@
-package com.example.memberservice.dto;
+package com.example.memberservice.dto.request;
 
 
 import com.example.memberservice.entity.Member;
@@ -16,21 +16,16 @@ public record RegisterRequest(
 	@NotBlank(message = "이름을 입력해주세요.")
 	String name,
 
-	@NotBlank(message = "닉네임을 입력해주세요.")
-	String nickname,
-
 	@NotBlank(message = "비밀번호를 입력해주세요.")
 	String password
 ) {
 
 	public Member toEntity(){
-		Member member = Member.builder()
+		return Member.builder()
 			.email(email())
 			.name(name())
 			.password(password())
 			.role(Role.ROLE_USER)
 			.build();
-
-		return member;
 	}
 }

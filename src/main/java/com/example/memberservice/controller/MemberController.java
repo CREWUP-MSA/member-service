@@ -1,36 +1,31 @@
 package com.example.memberservice.controller;
 
+import com.example.memberservice.dto.ApiResponse;
+import com.example.memberservice.dto.response.MemberResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.memberservice.dto.RegisterRequest;
-import com.example.memberservice.exception.CustomException;
-import com.example.memberservice.exception.ErrorCode;
+import com.example.memberservice.dto.request.RegisterRequest;
 import com.example.memberservice.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/members")
+@RequestMapping("/member-service/api")
 public class MemberController {
 
 	private final MemberService memberService;
 
-	@PostMapping("/register")
-	public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-		try {
-			memberService.register(request);
-			return ResponseEntity.ok().build();
+	@PostMapping("/member")
+	public ResponseEntity<ApiResponse<MemberResponse>> createMember(
+			@RequestBody RegisterRequest request) {
 
-		} catch (CustomException e) {
+		return ResponseEntity.ok(ApiResponse.success(memberService.register(request)));
+	}
 
-			ErrorCode errorCode = e.getErrorCode();
-			return ResponseEntity.status(errorCode.getStatus()).body(errorCode.getMessage());
-		}
+	@GetMapping("/member/{memberId}")
+	public ResponseEntity<ApiResponse<MemberResponse>> getMember(@PathVariable Long memberId) {
+		return ResponseEntity.ok(ApiResponse.success(memberService.findMember(memberId)));
 	}
 }
