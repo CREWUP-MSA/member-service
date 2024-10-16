@@ -6,6 +6,7 @@ import com.example.memberservice.entity.Role;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public record RegisterRequest(
 
@@ -20,11 +21,11 @@ public record RegisterRequest(
 	String password
 ) {
 
-	public Member toEntity(){
+	public Member toEntity(PasswordEncoder passwordEncoder){
 		return Member.builder()
 			.email(email())
 			.name(name())
-			.password(password())
+			.password(passwordEncoder.encode(password()))
 			.role(Role.ROLE_USER)
 			.build();
 	}
