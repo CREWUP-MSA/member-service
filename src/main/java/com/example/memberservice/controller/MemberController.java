@@ -24,8 +24,13 @@ public class MemberController {
 		return ResponseEntity.ok(ApiResponse.success(memberService.register(request)));
 	}
 
-	@GetMapping("/member/{memberId}")
-	public ResponseEntity<ApiResponse<MemberResponse>> getMember(@PathVariable Long memberId) {
-		return ResponseEntity.ok(ApiResponse.success(memberService.findMember(memberId)));
+	@GetMapping("/member/by-id")
+	public ResponseEntity<ApiResponse<MemberResponse>> getMemberById(@RequestParam("id") Long id) {
+		return ResponseEntity.ok(ApiResponse.success(memberService.findMemberById(id)));
+	}
+
+	@GetMapping("/member/by-email")
+	public ResponseEntity<ApiResponse<MemberResponse>> getMemberByEmail(@RequestParam("email") String email) {
+		return ResponseEntity.ok(ApiResponse.success(memberService.findMemberByEmail(email)));
 	}
 }

@@ -29,9 +29,16 @@ public class MemberService {
 		return MemberResponse.from(member);
 	}
 
-	public MemberResponse findMember(Long memberId) {
-		Member member = memberRepository.findById(memberId)
-			.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+	public MemberResponse findMemberById(Long id) {
+		Member member = memberRepository.findById(id)
+				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+		return MemberResponse.from(member);
+	}
+
+	public MemberResponse findMemberByEmail(String email) {
+		Member member = memberRepository.findByEmail(email)
+				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
 		return MemberResponse.from(member);
 	}
