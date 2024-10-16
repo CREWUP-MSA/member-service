@@ -1,5 +1,6 @@
 package com.example.memberservice.service;
 
+import com.example.memberservice.dto.request.AuthenticateRequest;
 import com.example.memberservice.dto.response.MemberResponse;
 import com.example.memberservice.entity.Member;
 import lombok.extern.slf4j.Slf4j;
@@ -67,5 +68,19 @@ public class MemberService {
 				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
 		return MemberResponse.from(member);
+	}
+
+	/**
+	 * 회원 인증
+	 * @param request 인증 요청 정보
+	 * @return Boolean 인증 성공 여부
+	 * @throws CustomException 회원을 찾을 수 없는 경우
+	 * @see ErrorCode
+	 */
+	public boolean authenticate(AuthenticateRequest request) {
+		Member member = memberRepository.findByEmail(request.email())
+				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+		return passwordEncoder.matches(request.password(), member.getPassword());
 	}
 }
