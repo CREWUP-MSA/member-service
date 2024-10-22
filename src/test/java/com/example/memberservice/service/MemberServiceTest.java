@@ -32,9 +32,6 @@ class MemberServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    @Mock
-    private EventProducer eventProducer;
-
     @InjectMocks private MemberService memberService;
 
     private final Member member = Member.builder()
@@ -56,7 +53,6 @@ class MemberServiceTest {
         assertNotNull(response);
         verify(memberRepository).existsByEmail(request.email());
         verify(memberRepository).save(any(Member.class));
-        verify(eventProducer).sendMemberCreateEvent(member.getId());
     }
 
     @Test
