@@ -23,6 +23,7 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final KafkaProducerService kafkaProducerService;
 
 	/**
 	 * 회원 가입
@@ -39,6 +40,7 @@ public class MemberService {
 		Member member = memberRepository.save(request.toEntity(passwordEncoder));
 
 		log.info("member registered: {}", member);
+		kafkaProducerService.sendMessage("member-create", member.getId());
 		return MemberResponse.from(member);
 	}
 
