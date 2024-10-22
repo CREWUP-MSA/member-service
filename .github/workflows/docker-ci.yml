@@ -31,10 +31,6 @@ jobs:
           echo "CONFIG_SERVER_URI=${{ secrets.CONFIG_SERVER_URI }}" >> $GITHUB_ENV
           echo "CONFIG_SERVER_URI=${{ secrets.EUREKA_SERVER_URI }}" >> $GITHUB_ENV
           echo "SERVER_IP=${{ secrets.SERVER_IP }}" >> $GITHUB_ENV
-          echo "KAFKA_HOST=${{ secrets.KAFKA_HOST }}" >> $GITHUB_ENV
-          echo "KAFKA_PORT=${{ secrets.KAFKA_PORT }}" >> $GITHUB_ENV
-          echo "KAFKA_TOPIC=${{ secrets.KAFKA_TOPIC }}" >> $GITHUB_ENV
-          echo "KAFKA_GROUP_ID=${{ secrets.KAFKA_GROUP_ID }}" >> $GITHUB_ENV
         shell: bash
 
       - name: Build with Gradle

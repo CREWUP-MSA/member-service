@@ -3,32 +3,11 @@ spring:
     config:
       uri: ${CONFIG_SERVER_URI}
       name: member-service
-    stream:
-      default-binder: kafka
-      bindings:
-        kafka-out:
-          destination: ${KAFKA_TOPIC}
-          binder: kafka
-    binders:
-      kafka:
-        type: kafka
-        environment:
-          spring:
-            kafka:
-              bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
-              template:
-                default-topic: ${KAFKA_TOPIC}
-              consumer:
-                group-id: ${KAFKA_GROUP_ID}
-      rabbit:
-        type: rabbit
-        environment:
-          spring:
-            rabbitmq:
-              host: ${RABBITMQ_HOST}
-              port: ${RABBITMQ_PORT}
-              username: ${RABBITMQ_USERNAME}
-              password: ${RABBITMQ_PASSWORD}
+  rabbitmq:
+    port: ${RABBITMQ_PORT}
+    host: ${RABBITMQ_HOST}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
 
 management:
   endpoints:

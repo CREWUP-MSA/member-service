@@ -23,7 +23,6 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
-	private final EventProducer eventProducer;
 
 	/**
 	 * 회원 가입
@@ -40,7 +39,6 @@ public class MemberService {
 		Member member = memberRepository.save(request.toEntity(passwordEncoder));
 
 		log.info("member registered: {}", member);
-		eventProducer.sendMemberCreateEvent(member.getId());
 		return MemberResponse.from(member);
 	}
 
