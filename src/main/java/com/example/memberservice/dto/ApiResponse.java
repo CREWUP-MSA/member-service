@@ -18,4 +18,8 @@ public record ApiResponse<T>(
     public static <T> ApiResponse<T> fail(String message) {
         return new ApiResponse<>(message, null);
     }
+
+    public static <T> ApiResponse<T> fail(T data) {
+        return new ApiResponse<>(null, data);
+    }
 }

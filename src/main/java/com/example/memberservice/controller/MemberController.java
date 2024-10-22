@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.memberservice.dto.request.RegisterRequest;
 import com.example.memberservice.service.MemberService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -20,7 +21,7 @@ public class MemberController {
 
 	@PostMapping("/member")
 	public ResponseEntity<ApiResponse<MemberResponse>> createMember(
-			@RequestBody RegisterRequest request) {
+			@RequestBody @Valid RegisterRequest request) {
 
 		return ResponseEntity.ok(ApiResponse.success(memberService.register(request)));
 	}
