@@ -9,7 +9,7 @@ public class EventProducer {
 
 	private final KafkaTemplate<String, Long> kafkaTemplate;
 
-	@Value("${spring.kafka.template.default-topic}")
+	@Value("${spring.cloud.stream.bindings.kafka-out.destination}")
 	private String topic;
 
 	public EventProducer(KafkaTemplate<String, Long> kafkaTemplate) {
