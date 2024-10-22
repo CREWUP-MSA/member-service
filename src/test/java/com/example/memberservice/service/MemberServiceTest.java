@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
@@ -30,6 +31,9 @@ class MemberServiceTest {
 
     @Mock
     private PasswordEncoder passwordEncoder;
+
+    @Mock
+    private EventProducer eventProducer;
 
     @InjectMocks private MemberService memberService;
 
@@ -52,6 +56,7 @@ class MemberServiceTest {
         assertNotNull(response);
         verify(memberRepository).existsByEmail(request.email());
         verify(memberRepository).save(any(Member.class));
+        verify(eventProducer).sendMemberCreateEvent(member.getId());
     }
 
     @Test
