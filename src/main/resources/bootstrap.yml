@@ -8,6 +8,13 @@ spring:
     host: ${RABBITMQ_HOST}
     username: ${RABBITMQ_USERNAME}
     password: ${RABBITMQ_PASSWORD}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
+    template:
+      default-topic: ${KAFKA_TOPIC}
+    consumer:
+      group-id: ${KAFKA_GROUP_ID}
+
 
 management:
   endpoints:
