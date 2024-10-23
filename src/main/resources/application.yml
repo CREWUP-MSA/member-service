@@ -13,4 +13,4 @@ spring:
 
 springdoc:
   swagger-ui:
-    path: /member-service/swagger-ui/index.html
+    path: /member-service/swagger-ui.html
