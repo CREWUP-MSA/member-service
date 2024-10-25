@@ -50,6 +50,7 @@ public class MemberController {
 	}
 
 	@PostMapping("/member/authenticate")
+	@Operation(summary = "회원 검증", description = "회원로그인시 Password 검증을 합니다.")
 	@MemberNotFoundApiResponse
 	public ResponseEntity<CustomApiResponse<Boolean>> authenticateMember(@RequestBody AuthenticateRequest request) {
 		return ResponseEntity.ok(CustomApiResponse.success(memberService.authenticate(request)));
