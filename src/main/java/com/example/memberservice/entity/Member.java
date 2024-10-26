@@ -40,11 +40,4 @@ public class Member extends BaseTimeEntity {
 
 	@Column(name = "provider")
 	private String provider;
-
-	@Column(name = "is_deleted", columnDefinition = "boolean default false")
-	private boolean isDeleted;
-
-	public void delete() {
-		this.isDeleted = true;
-	}
 }

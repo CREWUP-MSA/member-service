@@ -7,6 +7,8 @@ public enum ErrorCode {
 
 	EMAIL_ALREADY_EXISTS("이미 사용중인 이메일입니다.", 400),
 
+	PASSWORD_NOT_MATCHED("비밀번호가 일치하지 않습니다.", 401),
+
 	MEMBER_NOT_FOUND("해당 회원을 찾을 수 없습니다.", 404)
 	;
 

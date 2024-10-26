@@ -83,7 +83,10 @@ public class MemberService {
 		Member member = memberRepository.findByEmail(request.email())
 				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-		return passwordEncoder.matches(request.password(), member.getPassword());
+		if (!passwordEncoder.matches(request.password(), member.getPassword()))
+			throw new CustomException(ErrorCode.PASSWORD_NOT_MATCHED);
+
+		return true;
 	}
 
 	/**
@@ -97,7 +100,8 @@ public class MemberService {
 	public MemberResponse deleteMember(Long id) {
 		Member member = memberRepository.findById(id)
 				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-		member.delete();
+
+		memberRepository.delete(member);
 
 		log.info("member deleted: {}", member);
 		kafkaProducerService.sendMessage("member-delete", member.getId());

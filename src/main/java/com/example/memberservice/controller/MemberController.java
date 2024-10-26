@@ -2,6 +2,7 @@ package com.example.memberservice.controller;
 
 import com.example.memberservice.config.swagger.EmailAlreadyExistsApiResponse;
 import com.example.memberservice.config.swagger.MemberNotFoundApiResponse;
+import com.example.memberservice.config.swagger.PasswordNotMatchApiResponse;
 import com.example.memberservice.dto.CustomApiResponse;
 import com.example.memberservice.dto.request.AuthenticateRequest;
 import com.example.memberservice.dto.response.MemberResponse;
@@ -37,6 +38,7 @@ public class MemberController {
 
 	@GetMapping("/member/by-id")
 	@Operation(summary = "회원 조회 - ID", description = "ID로 회원을 조회합니다.")
+	@ApiResponse(responseCode = "200", description = "회원 조회 성공")
 	@MemberNotFoundApiResponse
 	public ResponseEntity<CustomApiResponse<MemberResponse>> getMemberById(@RequestParam("id") Long id) {
 		return ResponseEntity.ok(CustomApiResponse.success(memberService.findMemberById(id)));
@@ -44,6 +46,7 @@ public class MemberController {
 
 	@GetMapping("/member/by-email")
 	@Operation(summary = "회원 조회 - Email", description = "Email로 회원을 조회합니다.")
+	@ApiResponse(responseCode = "200", description = "회원 조회 성공")
 	@MemberNotFoundApiResponse
 	public ResponseEntity<CustomApiResponse<MemberResponse>> getMemberByEmail(@RequestParam("email") String email) {
 		return ResponseEntity.ok(CustomApiResponse.success(memberService.findMemberByEmail(email)));
@@ -51,13 +54,16 @@ public class MemberController {
 
 	@PostMapping("/member/authenticate")
 	@Operation(summary = "회원 검증", description = "회원로그인시 Password 검증을 합니다.")
+	@ApiResponse(responseCode = "200", description = "회원 검증 성공")
 	@MemberNotFoundApiResponse
+	@PasswordNotMatchApiResponse
 	public ResponseEntity<CustomApiResponse<Boolean>> authenticateMember(@RequestBody AuthenticateRequest request) {
 		return ResponseEntity.ok(CustomApiResponse.success(memberService.authenticate(request)));
 	}
 
 	@DeleteMapping("/member")
 	@Operation(summary = "회원 탈퇴", description = "회원을 탈퇴합니다.")
+	@ApiResponse(responseCode = "200", description = "회원 탈퇴 성공")
 	@MemberNotFoundApiResponse
 	public ResponseEntity<CustomApiResponse<MemberResponse>> deleteMember(@RequestHeader("X-Member-Id") Long id) {
 		return ResponseEntity.ok(CustomApiResponse.success(memberService.deleteMember(id)));

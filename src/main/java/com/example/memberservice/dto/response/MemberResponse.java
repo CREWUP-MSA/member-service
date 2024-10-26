@@ -9,7 +9,6 @@ public record MemberResponse(
     String name,
     String provider,
     Role role,
-    boolean isDeleted
 ) {
     public static MemberResponse from(Member member) {
         return new MemberResponse(
@@ -17,8 +16,7 @@ public record MemberResponse(
             member.getEmail(),
             member.getName(),
             member.getProvider(),
-            member.getRole(),
-            member.isDeleted()
+            member.getRole()
         );
     }
 }
