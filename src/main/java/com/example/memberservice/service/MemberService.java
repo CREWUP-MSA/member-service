@@ -85,4 +85,22 @@ public class MemberService {
 
 		return passwordEncoder.matches(request.password(), member.getPassword());
 	}
+
+	/**
+	 * 회원 삭제
+	 * @param id 삭제할 회원 ID
+	 * @return Boolean 삭제 성공 여부
+	 * @throws CustomException 회원을 찾을 수 없는 경우
+	 * @see ErrorCode
+	 */
+	@Transactional
+	public MemberResponse deleteMember(Long id) {
+		Member member = memberRepository.findById(id)
+				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+		member.delete();
+
+		log.info("member deleted: {}", member);
+		kafkaProducerService.sendMessage("member-delete", member.getId());
+		return MemberResponse.from(member);
+	}
 }

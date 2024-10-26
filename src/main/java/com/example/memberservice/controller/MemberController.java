@@ -55,4 +55,11 @@ public class MemberController {
 	public ResponseEntity<CustomApiResponse<Boolean>> authenticateMember(@RequestBody AuthenticateRequest request) {
 		return ResponseEntity.ok(CustomApiResponse.success(memberService.authenticate(request)));
 	}
+
+	@DeleteMapping("/member")
+	@Operation(summary = "회원 탈퇴", description = "회원을 탈퇴합니다.")
+	@MemberNotFoundApiResponse
+	public ResponseEntity<CustomApiResponse<MemberResponse>> deleteMember(@RequestHeader("X-Member-Id") Long id) {
+		return ResponseEntity.ok(CustomApiResponse.success(memberService.deleteMember(id)));
+	}
 }
